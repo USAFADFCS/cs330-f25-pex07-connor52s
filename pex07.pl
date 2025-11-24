@@ -11,10 +11,10 @@ ufo(kite).
 ufo(fighter_aircraft).
 ufo(cloud).
 
-c4c(smith).
-c4c(garcia).
-c4c(jones).
-c4c(chen).
+cadet(smith).
+cadet(garcia).
+cadet(jones).
+cadet(chen).
 
 day(tuesday).
 day(wednesday).
@@ -24,52 +24,52 @@ day(friday).
 % The query to get the answer(s) or that there is no answer
 % ?- solve.
 solve :-
-    ufo(SmithUFO), ufo(GarciaUFO), ufo(JonesUFO), ufo(ChenUFO),
-    all_different([SmithUFO, GarciaUFO, JonesUFO, ChenUFO]),
+    ufo(TuesdayUFO), ufo(WednesdayUFO), ufo(ThursdayUFO), ufo(FridayUFO),
+    all_different([TuesdayUFO, WednesdayUFO, ThursdayUFO, FridayUFO]),
     
-    day(SmithDay), day(GarciaDay),
-    day(JonesDay), day(ChenDay),
-    all_different([SmithDay, GarciaDay, JonesDay, ChenDay]),
+    cadet(TuesdayCadet), cadet(WednesdayCadet),
+    cadet(ThursdayCadet), cadet(FridayCadet),
+    all_different([TuesdayCadet, WednesdayCadet, ThursdayCadet, FridayCadet]),
     
-    Triples = [ [smith, SmithUFO, SmithDay],
-                [garcia, GarciaUFO, GarciaDay],
-                [jones, JonesUFO, JonesDay],
-                [chen, ChenUFO, ChenDay] ],
+    Triples = [ [tuesday, TuesdayUFO, TuesdayCadet],
+                [wednesday, WednesdayUFO, WednesdayCadet],
+                [thursday, ThursdayUFO, ThursdayCadet],
+                [friday, FridayUFO, FridayCadet] ],
     
     % 1. C4C Smith did not see a weather balloon, nor kite
-    \+ member([smith, weather_balloon, _], Triples),
-    \+ member([smith, kite, _], Triples),
+    \+ member([_, weather_balloon, smith], Triples),
+    \+ member([_, kite, smith], Triples),
     
     % 2. The one who saw the kite isn’t C4C Garcia
-    \+ member([garcia, kite, _], Triples),
+    \+ member([_, kite, garcia], Triples),
     
     % 3. Friday’s sighting was made by either C4C Chen or the one who saw the fighter aircraft.
-    ( (member([chen, _, friday], Triples));
-      (member([_, fighter_aircraft, friday], Triples))  ),
+    ( (member([friday, _, chen], Triples));
+      (member([friday, fighter_aircraft, _], Triples))  ),
     
     % 4. The kite was not sighted on Tuesday.
-    \+ member([_, kite, tuesday], Triples),
+    \+ member([tuesday, kite, _], Triples),
     
     % 5. Neither C4C Garcia nor C4C Jones saw the weather balloon
-    \+ member([garcia, weather_balloon, _], Triples),
-    \+ member([jones, weather_balloon, _], Triples),
+    \+ member([_, weather_balloon, garcia], Triples),
+    \+ member([_, weather_balloon, jones], Triples),
     
     % 6. C4C Jones did not make their sighting on Tuesday.
-    \+ member([jones, _, tuesday], Triples),
+    \+ member([tuesday, _, jones], Triples),
 
     % 7. C4C Smith saw an object that turned out to be a cloud.
-    member([smith, cloud, _], Triples),
+    member([_, cloud, smith], Triples),
 
     % 8. The fighter aircraft was spotted on Friday.
-    member([_, fighter_aircraft, friday], Triples),
+    member([friday, fighter_aircraft, _], Triples),
 
     % 9. The weather balloon was not spotted on Wednesday.
-    \+ member([_, weather_balloon, wednesday], Triples),
+    \+ member([wednesday, weather_balloon, _], Triples),
 
-    tell(smith, SmithUFO, SmithDay),
-    tell(garcia, GarciaUFO, GarciaDay),
-    tell(jones, JonesUFO, JonesDay),
-    tell(chen, ChenUFO, ChenDay).
+    tell(tuesday, TuesdayUFO, TuesdayCadet),
+    tell(wednesday, WednesdayUFO, WednesdayCadet),
+    tell(thursday, ThursdayUFO, ThursdayCadet),
+    tell(friday, FridayUFO, FridayCadet).
 
 % Succeeds if all elements of the argument list are bound and different.
 % Fails if any elements are unbound or equal to some other element.
@@ -78,5 +78,5 @@ all_different([_ | T]) :- all_different(T).
 all_different([_]).
 
 tell(X, Y, Z) :-
-    write('C4C '), write(X), write(' saw the '), write(Y),
-    write(' on '), write(Z), write('.'), nl.
+    write('On '), write(X), write(', C4C '), write(Z),
+    write(' saw '), write(Y), write('.'), nl.
