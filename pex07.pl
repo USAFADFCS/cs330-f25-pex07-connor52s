@@ -3,7 +3,7 @@
 %
 % name: Connor Song
 %
-% Documentation: Utilized the provided HW 7 code as a starting point
+% Documentation: Utilized the provided HW 7 code as a starting point for my code. No further documentation required. 
 %
 
 ufo(weather_balloon).
