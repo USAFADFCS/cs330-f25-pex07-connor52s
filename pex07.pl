@@ -6,65 +6,65 @@
 % Documentation: Utilized the provided HW 7 code as a starting point
 %
 
-UFO(weather_balloon)
-UFO(kite).
-UFO(fighter_aircraft).
-UFO(cloud).
+ufo(weather_balloon).
+ufo(kite).
+ufo(fighter_aircraft).
+ufo(cloud).
 
-C4C(Smith).
-C4C(Garcia).
-C4C(Jones).
-C4C(Chen).
+c4c(smith).
+c4c(garcia).
+c4c(jones).
+c4c(chen).
 
-Day(Tuesday).
-Day(Wednesday).
-Day(Thursday).
-Day(Friday).
+day(tuesday).
+day(wednesday).
+day(thursday).
+day(friday).
 
 % The query to get the answer(s) or that there is no answer
 % ?- solve.
 solve :-
-    UFO(SmithUFO), UFO(GarciaUFO), UFO(JonesUFO), UFO(ChenUFO),
+    ufo(SmithUFO), ufo(GarciaUFO), ufo(JonesUFO), ufo(ChenUFO),
     all_different([SmithUFO, GarciaUFO, JonesUFO, ChenUFO]),
     
-    relative(SmithDay), relative(GarciaDay),
-    relative(JonesDay), relative(ChenDay),
+    day(SmithDay), day(GarciaDay),
+    day(JonesDay), day(ChenDay),
     all_different([SmithDay, GarciaDay, JonesDay, ChenDay]),
     
-    Triples = [ [Smith, SmithUFO, SmithDay],
-                [Garcia, GarciaUFO, GarciaDay],
-                [Jones, JonesUFO, JonesDay],
-                [Chen, ChenUFO, ChenDay] ],
+    Triples = [ [smith, SmithUFO, SmithDay],
+                [garcia, GarciaUFO, GarciaDay],
+                [jones, JonesUFO, JonesDay],
+                [chen, ChenUFO, ChenDay] ],
     
     % 1. C4C Smith did not see a weather balloon, nor kite
-    \+ member([Smith, weather_balloon, _], Triples),
-    \+ member([Smith, kite, _], Triples),
+    \+ member([smith, weather_balloon, _], Triples),
+    \+ member([smith, kite, _], Triples),
     
     % 2. The one who saw the kite isn’t C4C Garcia
-    \+ member([Garcia, kite, _], Triples),
+    \+ member([garcia, kite, _], Triples),
     
     % 3. Friday’s sighting was made by either C4C Chen or the one who saw the fighter aircraft.
-    ( (member([Chen, _, Friday], Triples));
-      (member([_, fighter_aircraft, Friday], Triples))  ),
+    ( (member([chen, _, friday], Triples));
+      (member([_, fighter_aircraft, friday], Triples))  ),
     
     % 4. The kite was not sighted on Tuesday.
-    \+ member([_, kite, Tuesday], Triples),
+    \+ member([_, kite, tuesday], Triples),
     
     % 5. Neither C4C Garcia nor C4C Jones saw the weather balloon
-    \+ member([Garcia, weather_balloon, _], Triples),
-    \+ member([Jones, weather_balloon, _], Triples),
+    \+ member([garcia, weather_balloon, _], Triples),
+    \+ member([jones, weather_balloon, _], Triples),
     
     % 6. C4C Jones did not make their sighting on Tuesday.
-    \+ member([Jones, _, Tuesday], Triples),
+    \+ member([jones, _, tuesday], Triples),
 
     % 7. C4C Smith saw an object that turned out to be a cloud.
-    member([Smith, cloud, _], Triples),
+    member([smith, cloud, _], Triples),
 
     % 8. The fighter aircraft was spotted on Friday.
-    member([_, fighter_aircraft, Friday], Triples),
+    member([_, fighter_aircraft, friday], Triples),
 
     % 9. The weather balloon was not spotted on Wednesday.
-    \+ member([_, weather_balloon, Wednesday], Triples),
+    \+ member([_, weather_balloon, wednesday], Triples),
 
     tell(Smith, SmithUFO, SmithDay),
     tell(Garcia, GarciaUFO, GarciaDay),
