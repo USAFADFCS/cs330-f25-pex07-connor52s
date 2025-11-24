@@ -66,10 +66,10 @@ solve :-
     % 9. The weather balloon was not spotted on Wednesday.
     \+ member([_, weather_balloon, wednesday], Triples),
 
-    tell(Smith, SmithUFO, SmithDay),
-    tell(Garcia, GarciaUFO, GarciaDay),
-    tell(Jones, JonesUFO, JonesDay),
-    tell(Chen, ChenUFO, ChenDay).
+    tell(smith, SmithUFO, SmithDay),
+    tell(garcia, GarciaUFO, GarciaDay),
+    tell(jones, JonesUFO, JonesDay),
+    tell(chen, ChenUFO, ChenDay).
 
 % Succeeds if all elements of the argument list are bound and different.
 % Fails if any elements are unbound or equal to some other element.
